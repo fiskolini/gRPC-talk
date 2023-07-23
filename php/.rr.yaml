@@ -1,0 +1,10 @@
+version: '2.7'
+
+grpc:
+  listen: "tcp://:3000"
+  proto: "./proto/todo.proto"
+  workers:
+    command: "php worker.php"
+    pool:
+      numWorkers: 1
+      maxJobs:    1

@@ -1,0 +1,6 @@
+{
+  "require": {
+    "php": ">=8.1",
+    "spiral/php-grpc": "^1.0"
+  }
+}
