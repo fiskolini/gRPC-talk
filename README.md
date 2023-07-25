@@ -35,7 +35,8 @@ Assets Included
 This repository includes the following assets:
 
 1. **Presentation Slides**: The presentation slides used in the workshop are available in PDF format. You can find them
-   in the `presentation/` directory.
+   in the `presentation/` directory. Also, the presentation can be
+   found [in this Google Slides](https://docs.google.com/presentation/d/1mOPGBJV-uFspwRjJtUUL9xZyS-NPmL4dgHt9rPccjPU/edit?usp=sharing).
 2. **Code Examples**: We have provided a simple code example of the gRPC implementation using NodeJS. You can find it in
    the `code/` directory.
 
