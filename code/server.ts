@@ -1,27 +1,19 @@
-import {loadPackageDefinition, status, Server, ServerCredentials, ServerWritableStream} from '@grpc/grpc-js';
-import {loadSync} from '@grpc/proto-loader';
-import {join} from 'path';
-import {Todo, TodoRequest} from "./models/todo";
+import {status, Server, ServerCredentials, ServerWritableStream} from '@grpc/grpc-js';
+import {TodoItem} from "./generated/todo/v1/todo";
+import {todoV1PackageDefinition} from "./lib/package-def/todo.v1";
 
-const PROTO_PATH = join(__dirname, '/proto/todo.proto');
-const packageDefinition = loadSync(PROTO_PATH, {
-    keepCase: true,
-    longs: String,
-    enums: String,
-    defaults: true,
-    oneofs: true,
-});
-
-const todoProto = loadPackageDefinition(packageDefinition) as any;
-const todos: { id: number; text: string }[] = [];
-let nextId = 1;
+const todos: TodoItem[] = [];
+let lastTodoId = 0;
 
 const todoService = {
-    CreateTodo: ({request}: { request: TodoRequest }, callback: any) => {
+    CreateTodo: ({request}: { request: TodoItem }, callback: any) => {
         const {text} = request;
+        lastTodoId++;
         console.log(`Received request to create a todo: ${text}`)
-        const todo = {id: nextId++, text};
+
+        const todo = {id: lastTodoId, text};
         todos.push(todo);
+        console.log(`Todo ID ${lastTodoId} created successfully.`)
         callback(null, todo);
     },
 
@@ -29,7 +21,7 @@ const todoService = {
         callback(null, {items: todos});
     },
 
-    ReadTodosStream: (call: ServerWritableStream<null, Todo>) => {
+    ReadTodosStream: (call: ServerWritableStream<null, TodoItem>) => {
         todos.forEach((todo) => call.write(todo));
         call.end();
     },
@@ -46,7 +38,7 @@ const todoService = {
 
 function startServer() {
     const server = new Server();
-    server.addService(todoProto.todoPackage_V1.Todo.service, todoService);
+    server.addService(todoV1PackageDefinition.service, todoService);
     server.bindAsync('0.0.0.0:50051', ServerCredentials.createInsecure(), () => {
         console.log('gRPC server running on port 50051');
     });
