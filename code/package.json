@@ -1,15 +1,33 @@
 {
-  "name": "grpc-workshop-exads",
+  "name": "grpc-fundamentals",
   "version": "1.0.0",
-  "description": "Material for the gRPC Workshop for EXADS",
-  "main": "server.js",
+  "description": "Material for the gRPC Tech Talk",
+  "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "npx ts-node server.ts",
+    "client:create": "npx ts-node client-create.ts",
+    "client:read": "npx ts-node client-read.ts",
+    "client:stream": "npx ts-node client-stream.ts",
+    "client:delete": "npx ts-node client-delete.ts",
+    "codegen": "./compile-proto.sh"
   },
   "author": "Francisco Carvalho",
   "license": "ISC",
   "dependencies": {
-    "@grpc/proto-loader": "^0.7.8",
-    "grpc": "^1.24.11"
+    "protoc-gen-ts": "^0.8.7",
+    "rxjs": "^7.8.2",
+    "ts-node": "^10.9.2",
+    "ts-proto": "^2.6.1",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@bufbuild/buf": "^1.50.0",
+    "@grpc/grpc-js": "^1.12.6",
+    "@grpc/proto-loader": "^0.7.13",
+    "@improbable-eng/grpc-web": "^0.15.0",
+    "@types/google-protobuf": "^3.15.12",
+    "grpc_tools_node_protoc_ts": "^5.3.3",
+    "grpc-tools": "^1.13.0",
+    "ts-protoc-gen": "^0.15.0"
   }
 }
